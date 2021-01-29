@@ -9,9 +9,10 @@ import android.view.SurfaceHolder;
 public class DrawThread extends Thread{
     private SurfaceHolder surfaceHolder;
     private volatile boolean running = true;
-    private float startX, startY, endX, endY;
+    private Player player;
 
-    public DrawThread(Context context, SurfaceHolder surfaceHolder) {
+    public DrawThread(Context context, SurfaceHolder surfaceHolder, Player player) {
+        this.player = player;
         this.surfaceHolder = surfaceHolder;
     }
 
@@ -19,15 +20,6 @@ public class DrawThread extends Thread{
         running = false;
     }
 
-    public void setStartCords(float startX, float startY){
-        this.startX = startX;
-        this.startY = startY;
-    }
-
-    public void setEndCords(float endX, float endY){
-        this.endX = endX;
-        this.endY = endY;
-    }
 
     @Override
     public void run() {
@@ -38,15 +30,12 @@ public class DrawThread extends Thread{
             if (canvas != null) {
                 try {
                     canvas.drawColor(Color.BLUE);
-                    if (startX != endX && startY != endY){
-                        canvas.drawRect(startX, startY, endX, endY, paint);}
+                    paint.setStyle(Paint.Style.FILL);
+                    paint.setColor(Color.RED);
+                    canvas.drawOval(this.player.draw(), paint);
                 } finally {
                     surfaceHolder.unlockCanvasAndPost(canvas);
                 }
-            }
-            try{
-                Thread.sleep(1000);
-            } catch (InterruptedException ignored) {
             }
         }
     }

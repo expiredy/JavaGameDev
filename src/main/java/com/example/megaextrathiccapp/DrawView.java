@@ -23,7 +23,7 @@ public class DrawView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         this.player = new Player();
-        drawThread = new DrawThread(getContext(), getHolder());
+        drawThread = new DrawThread(getContext(), getHolder(), this.player);
         drawThread.start();
     }
 
