@@ -26,19 +26,19 @@ public class Player {
     }
 
     public void move(float new_x_cord, float new_y_cord, float speed){
-        this.moveArray[this.moveArray.length] = new MovingThread(this, this.x_pos, this.y_pos, new_x_cord, new_y_cord, speed);
-        this.moveArray[this.moveArray.length - 1].start();
-        if (this.moveArray.length >= this.maximum_moves){
-            this.moveArray[0].moving = false;
-//            try {
-//                this.moveArray[0].join();
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
+//        this.moveArray[this.moveArray.length] = new MovingThread(this, this.x_pos, this.y_pos, new_x_cord, new_y_cord, speed);
+//        this.moveArray[this.moveArray.length - 1].start();
+//        if (this.moveArray.length >= this.maximum_moves){
+//            this.moveArray[0].moving = false;
+////            try {
+////                this.moveArray[0].join();
+////            } catch (InterruptedException e) {
+////                e.printStackTrace();
+////            }
+//            for (int i=0; i < this.moveArray.length - 2; i++){
+//                this.moveArray[i] = this.moveArray[i + 1];
 //            }
-            for (int i=0; i < this.moveArray.length - 2; i++){
-                this.moveArray[i] = this.moveArray[i + 1];
-            }
-        }
+//        }
     }
 
     public RectF draw(){
