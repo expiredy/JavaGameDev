@@ -7,9 +7,9 @@ import android.graphics.Paint;
 import android.view.SurfaceHolder;
 
 public class DrawThread extends Thread{
-    private SurfaceHolder surfaceHolder;
+    private final SurfaceHolder surfaceHolder;
     private volatile boolean running = true;
-    private Player player;
+    private final Player player;
 
     public DrawThread(Context context, SurfaceHolder surfaceHolder, Player player) {
         this.player = player;
