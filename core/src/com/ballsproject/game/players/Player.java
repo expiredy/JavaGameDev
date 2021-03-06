@@ -15,6 +15,8 @@ public class Player {
     private final Rectangle bounds;
     public Texture ballTex;
 
+    public float minVectorForce = 25f;
+
     private static final float SLIDE = 0.05f;
     private static final int GRAVITY = -16;
 
@@ -26,7 +28,7 @@ public class Player {
     }
 
     public void move(float newX, float newY, float power){
-        
+
     }
 
     public Vector2 getPosition() {
@@ -49,8 +51,27 @@ public class Player {
     public Rectangle getBounds(){
         return bounds;}
 
-    public void jump(int newX, int newY, double forceCoef){
+    public void jump(float newX, float newY, double forceCoef){
+//        float cos = Math.round((position.x * newX + position.y * newY) / (Math.sqrt(position.x *newX + position.y * newY) * Math.sqrt(newX * newX + newY * newY)));
+//        double angle =  acos(cos);
         if (isJumpable()){
+//            if (position.y > newY){
+//                if (position.x > newX){
+//                    velocity.add(-minVectorForce * newX / newY, -minVectorForce * newY / newX);
+//                }
+//                else if(position.x < newX){
+//                    velocity.add(minVectorForce * newX / newY, -minVectorForce * newY / newX);
+//                }
+//            }
+//            else if(position.y < newY){
+//                if (position.x > newX){
+//                    velocity.add(-minVectorForce * newX / newY, minVectorForce * newY / newX);
+//                }
+//                else if(position.x < newX){
+//                    velocity.add(minVectorForce * newX / newY, minVectorForce * newY / newX );
+//                }
+//            }
+
             velocity.add(-(position.x - newX), BallsScript.HEIGHT - newY + position.y);
         }
     }
