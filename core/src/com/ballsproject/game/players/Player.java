@@ -4,10 +4,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.ballsproject.game.BallsScript;
+import com.ballsproject.game.objects.GrapplePoint;
 
 public class Player {
     private final Vector2 position;
     private final Vector2 velocity;
+
+    public static boolean isGrappled = false;
 
     public float xSize = 100;
     public float ySize = 100;
@@ -51,34 +54,41 @@ public class Player {
     public Rectangle getBounds(){
         return bounds;}
 
-    public void jump(float newX, float newY, double forceCoef){
+    public void jump(float newX, float newY, float forceCoef){
 //        float cos = Math.round((position.x * newX + position.y * newY) / (Math.sqrt(position.x *newX + position.y * newY) * Math.sqrt(newX * newX + newY * newY)));
 //        double angle =  acos(cos);
-        if (isJumpable()){
-//            if (position.y > newY){
-//                if (position.x > newX){
-//                    velocity.add(-minVectorForce * newX / newY, -minVectorForce * newY / newX);
-//                }
-//                else if(position.x < newX){
-//                    velocity.add(minVectorForce * newX / newY, -minVectorForce * newY / newX);
-//                }
-//            }
-//            else if(position.y < newY){
-//                if (position.x > newX){
-//                    velocity.add(-minVectorForce * newX / newY, minVectorForce * newY / newX);
-//                }
-//                else if(position.x < newX){
-//                    velocity.add(minVectorForce * newX / newY, minVectorForce * newY / newX );
-//                }
-//            }
-
-            velocity.add(-(position.x - newX), BallsScript.HEIGHT - newY + position.y);
+//        velocity.add(-(position.x - newX) * forceCoef, -(position.y - (BallsScript.HEIGHT - newY)) * forceCoef);
+        if (position.y < newY){
+                if (position.x < newX){
+                    velocity.add(newX, BallsScript.HEIGHT - newY);
+                }
+                else if(position.x > newX){
+                    velocity.add(-(position.x - newX), BallsScript.HEIGHT - newY);
+                }
+            }
+        else if(position.y > newY){
+            if (position.x < newX){
+                velocity.add(newX, position.y - newY);
+            }
+            else if(position.x > newX){
+                velocity.add(-(position.x - newX), position.y - newY);
+            }
         }
+         velocity.x *= forceCoef;
+         velocity.y *= forceCoef;
+
+
+//            velocity.add(-(position.x - newX), BallsScript.HEIGHT - newY + position.y);
     }
+
+     public void conncet(GrapplePoint point){
+
+     }
+
 
     public void update(float dt){
         if (position.y < BallsScript.HEIGHT){
-        velocity.add(0, GRAVITY);}
+            velocity.add(0, GRAVITY);}
 
         if (position.x < 0){
             position.x = 0;

@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public abstract class State {
-    public OrthographicCamera gamecum;
+    public static OrthographicCamera gamecum;
     protected Vector2 mouse;
     protected GameStateManager stateManager;
 

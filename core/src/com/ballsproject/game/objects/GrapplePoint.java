@@ -28,7 +28,11 @@ public class GrapplePoint {
         pixmap.setColor(Color.BLUE);
         pixmap.fillCircle(xSize / 2, ySize / 2, xSize);
         Texture texture = new Texture(pixmap);
-
+//        Gdx.gl10.glLineWidth(10);
+//        shapeDebugger.setProjectionMatrix(GameState.gamecum.combined);
+//        shapeDebugger.begin(ShapeRenderer.ShapeType.Line);
+//        shapeDebugger.setColor(1, 1, 1, 1);
+//        shapeDebugger.line(2, 2, 5, 5);
         batch.draw(texture, xPos, yPos);
     }
 }
