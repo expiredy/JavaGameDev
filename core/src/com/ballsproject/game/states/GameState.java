@@ -27,6 +27,11 @@
         player = new Player((float) BallsScript.WIDTH / 2,400);
         gamecum.setToOrtho(false, BallsScript.WIDTH, BallsScript.HEIGHT);
     }
+
+    private void checkForCollisions(){
+      player.checkCollisionsWithGround();
+    }
+
     @Override
     protected void handleInput() {
         if(Gdx.input.justTouched()){
@@ -45,6 +50,7 @@
     @Override
     public void update(float dTime) {
         handleInput();
+        checkForCollisions();
         if (isPlay){
             this.player.update(dTime);}
     }

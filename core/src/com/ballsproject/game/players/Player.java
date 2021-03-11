@@ -93,19 +93,6 @@ public class Player {
         if (position.y < BallsScript.HEIGHT){
             velocity.add(0, GRAVITY);}
 
-        if (position.x < 0){
-            position.x = 0;
-            bounce();
-        }
-        if (position.x > BallsScript.WIDTH - this.ySize){
-            position.x = BallsScript.WIDTH - this.ySize;
-            bounce();
-        }
-
-        if (position.y > BallsScript.HEIGHT - this.ySize){
-            bounce();
-            position.y = BallsScript.HEIGHT - this.ySize;
-        }
         velocity.scl(dt);
 
         position.add(velocity.x, velocity.y);
@@ -120,5 +107,21 @@ public class Player {
         }
         velocity.scl(1/dt);
         bounds.setPosition(position.x, position.y);
+    }
+
+    public void checkCollisionsWithGround() {
+        if (position.x < 0){
+            position.x = 0;
+            bounce();
+        }
+        if (position.x > BallsScript.WIDTH - this.ySize){
+            position.x = BallsScript.WIDTH - this.ySize;
+            bounce();
+        }
+
+        if (position.y > BallsScript.HEIGHT - this.ySize){
+            bounce();
+            position.y = BallsScript.HEIGHT - this.ySize;
+        }
     }
 }
