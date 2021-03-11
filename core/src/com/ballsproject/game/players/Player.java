@@ -58,20 +58,23 @@ public class Player {
 //        float cos = Math.round((position.x * newX + position.y * newY) / (Math.sqrt(position.x *newX + position.y * newY) * Math.sqrt(newX * newX + newY * newY)));
 //        double angle =  acos(cos);
 //        velocity.add(-(position.x - newX) * forceCoef, -(position.y - (BallsScript.HEIGHT - newY)) * forceCoef);
-        if (position.y < newY){
-                if (position.x < newX){
+        float positionX = position.x - this.xSize;
+        float positionY = position.y - this.ySize;
+
+        if (positionY < newY){
+                if (positionX < newX){
                     velocity.add(newX, BallsScript.HEIGHT - newY);
                 }
-                else if(position.x > newX){
-                    velocity.add(-(position.x - newX), BallsScript.HEIGHT - newY);
+                else if(positionX > newX){
+                    velocity.add(-(positionX - newX), BallsScript.HEIGHT - newY);
                 }
             }
-        else if(position.y > newY){
-            if (position.x < newX){
-                velocity.add(newX, position.y - newY);
+        else if(positionY > newY){
+            if (positionX < newX){
+                velocity.add(newX, positionY - newY);
             }
-            else if(position.x > newX){
-                velocity.add(-(position.x - newX), position.y - newY);
+            else if(positionX > newX){
+                velocity.add(-(positionX - newX), positionY - newY);
             }
         }
          velocity.x *= forceCoef;

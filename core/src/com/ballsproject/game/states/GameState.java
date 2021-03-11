@@ -15,6 +15,8 @@
     public static boolean isPlay = true;
     private final GrapplePoint point;
     private final Player player;
+    private boolean moveable = false;
+    private long powerCounter;
 
     public GameState(GameStateManager gsm) {
         super(gsm);
@@ -28,12 +30,14 @@
     @Override
     protected void handleInput() {
         if(Gdx.input.justTouched()){
-            long startTime = TimeUtils.millis();
+            moveable = true;
+            this.powerCounter = TimeUtils.millis();
+            }
+        else if(!Gdx.input.isTouched() & moveable){
+            moveable = false;
+            System.out.println((TimeUtils.millis() - powerCounter) / 1000);
             if (player.isJumpable()){
-                player.jump(Gdx.input.getX(), Gdx.input.getY(), 1.5f);}
-            else {
-                player.conncet(point);
-                System.out.println((TimeUtils.millis() - startTime) * 1000);
+                player.jump(Gdx.input.getX(), Gdx.input.getY(),(float) (TimeUtils.millis() - powerCounter) / 1000);
             }
         }
     }
