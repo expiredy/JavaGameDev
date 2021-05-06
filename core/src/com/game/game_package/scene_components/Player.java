@@ -18,6 +18,7 @@ public class Player extends Target{
     private static final float GRAVITY = -13.0f;
     private static final float SPEED = 20f;
     private static final float LERP = 0.1f;
+    private static final float boundsMultiplayer = 0.3f;
 
 
     //Some movement values
@@ -60,6 +61,7 @@ public class Player extends Target{
     }
 
     public void drawPlayer(Batch batch){
+
         batch.draw(this.playerSprite, position.x, position.y, xSize, ySize);
     }
 
@@ -72,7 +74,7 @@ public class Player extends Target{
         float xDirection = SPEED * deltaX  / lengthOfWay;
         float yDirection = SPEED * deltaY / lengthOfWay;
         System.out.println(xDirection + " " + yDirection);
-        velocity.add(xDirection * 10, yDirection * 10);
+        velocity.add(xDirection * 10, yDirection * 10 + -GRAVITY);
 //        float xCordCoef = xCordToGo / yCordToGo;
 //        float yCordCoef = 1 - Math.abs(xCordCoef);
 //
@@ -83,8 +85,17 @@ public class Player extends Target{
         //velocity.y *= force;
     }
 
+    public void bounce(){
+        if (position.y <= 0 | position.y + this.ySize >= BallsGameClass.HEIGHT){
+            velocity.y = -velocity.y * boundsMultiplayer;}
+        if (position.x <= 0 | position.x + this.xSize >= BallsGameClass.WIDTH)
+            velocity.x = -velocity.x * boundsMultiplayer;
+
+    }
+
     private void updateCurrentPosition(float deltaTime){
         velocity.scl(deltaTime);
+
 
         position.add(velocity.x, velocity.y);
 
@@ -97,7 +108,7 @@ public class Player extends Target{
             velocity.add(0, GRAVITY);}
         else if(!isGrounded){
             isGrounded = true;
-            velocity.y = 0;
+            position.y = 0;
         }
     }
     public boolean isInAir(){
