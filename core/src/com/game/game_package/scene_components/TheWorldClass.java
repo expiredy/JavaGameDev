@@ -2,6 +2,7 @@ package com.game.game_package.scene_components;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.game.game_package.constants.*;
 import com.game.game_package.scene_components.oclusion.DefaultObject;
 import com.game.game_package.scene_components.oclusion.FreeSpace;
 import com.game.game_package.scene_components.oclusion.Spike;
@@ -24,25 +25,28 @@ public class TheWorldClass {
     public DefaultObject [][] gameField;
 
     public TheWorldClass(){
-        System.out.println(worldsWidth + "" + worldsHeight);
+        System.out.println(worldsWidth + "/n" + worldsHeight);
     }
 
     public void gameWorldGenerator(Integer[][] gameFieldBlueprint){
-        world = new World(new Vector2(0, -10), true);
+        this.world = new World(new Vector2(0, -10), true);
         worldsHeight = gameFieldBlueprint.length;
         worldsWidth = gameFieldBlueprint[0].length;
 
         gameField = new DefaultObject[worldsHeight][worldsWidth];
-        for(int xCord = 0; xCord < worldsHeight; xCord++) {
-            for (int yCord = 0; yCord < worldsWidth; yCord++) {
-                if (gameFieldBlueprint[xCord][yCord] == 1){
-                    gameField[xCord][yCord] = new Wall();
-                }
-                else if (gameFieldBlueprint[xCord][yCord] == 0){
-                    gameField[xCord][yCord] = new FreeSpace();
-                }
-                else if (gameFieldBlueprint[xCord][yCord] == 2){
-                    gameField[xCord][yCord] = new Spike();
+        for(int yCord = 0; yCord < worldsHeight; yCord++) {
+            for (int xCord = 0; xCord < worldsWidth; xCord++) {
+                switch (gameFieldBlueprint[yCord][xCord]){
+                    case LevelKeyConstants.wallId:
+                        gameField[yCord][xCord] = new Wall();
+                        break;
+                    case LevelKeyConstants.freeSpaceId:
+                        gameField[yCord][xCord] = new FreeSpace();
+                        break;
+                    case LevelKeyConstants.cornerId:
+                        gameField[yCord][xCord] = new Spike();
+                        break;
+
                 }
             }
         }

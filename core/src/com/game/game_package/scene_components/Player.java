@@ -17,7 +17,7 @@ public class Player extends Target{
     // some phisiscs constans
     private static final float GRAVITY = -13.0f;
     private static final float SPEED = 20f;
-    private static final float LERP = 0.1f;
+    //private static final float LERP = 0.1f;
     private static final float boundsMultiplayer = 0.3f;
 
 
