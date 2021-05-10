@@ -74,7 +74,8 @@ public class Player extends Target{
         float xDirection = SPEED * deltaX  / lengthOfWay;
         float yDirection = SPEED * deltaY / lengthOfWay;
         System.out.println(xDirection + " " + yDirection);
-        velocity.add(xDirection * 10, yDirection * 10 + -GRAVITY);
+        velocity.add(xDirection * 10, (yDirection - GRAVITY) * 10);
+        System.out.println(velocity);
 //        float xCordCoef = xCordToGo / yCordToGo;
 //        float yCordCoef = 1 - Math.abs(xCordCoef);
 //
