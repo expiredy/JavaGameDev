@@ -9,14 +9,19 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.game.game_package.BallsGameClass;
 
+import org.graalvm.compiler.replacements.Log;
+
 public class Player extends Target{
     //Some objects init
 
     private final OrthographicCamera camera;
 
     // some phisiscs constans
-    private static final float GRAVITY = -13.0f;
-    private static final float SPEED = 20f;
+    private static final float GRAVITY = -5.0f;
+    private static final float SPEED = 100f;
+    private static final float SLIDESPEED = 0.5f;
+    private static final float BounceMultiplayer = 0.3f;
+
     //private static final float LERP = 0.1f;
     private static final float boundsMultiplayer = 0.3f;
 
@@ -43,6 +48,7 @@ public class Player extends Target{
         //camera.makeFolow(this);
         velocity =  new Vector2(0, 0);
         position = new Vector2(spawningXCord, spawningYCord);
+        isGrounded = false;
         centerPosition = new Vector2(position.x + xSize / 2, position.y + ySize / 2);
         startDrawing();
     }
@@ -50,7 +56,7 @@ public class Player extends Target{
     public void update(float deltaTime){
         //updateCameraPosition(deltaTime);
         bounds.setPosition(position.x, position.y);
-        centerPosition = new Vector2(position.x + xSize / 2, position.y + ySize / 2);
+        centerPosition = new Vector2(position.x + (float)xSize / 2, position.y + (float)ySize / 2);
         freeFall();
         updateCurrentPosition(deltaTime);
     }
@@ -66,16 +72,19 @@ public class Player extends Target{
     }
 
     public void AddForce(float xCordToGo, float yCordToGo, double force){
-        System.out.println(centerPosition.x + " " + xCordToGo);
-        System.out.println(centerPosition.y + " " + yCordToGo);
+//        System.out.println(centerPosition.x + " " + xCordToGo);
+//        System.out.println(centerPosition.y + " " + yCordToGo);
         float deltaX = xCordToGo - centerPosition.x;
         float deltaY = yCordToGo - centerPosition.y;
         float lengthOfWay = (float) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-        float xDirection = SPEED * deltaX  / lengthOfWay;
-        float yDirection = SPEED * deltaY / lengthOfWay;
-        System.out.println(xDirection + " " + yDirection);
-        velocity.add(xDirection * 10, (yDirection - GRAVITY) * 10);
-        System.out.println(velocity);
+        float xDirection = SPEED * (deltaX  / lengthOfWay);
+        float yDirection = SPEED * (deltaY / lengthOfWay);
+//        System.out.println(xDirection + " " + yDirection);
+        System.out.println("Current X: " + (int) centerPosition.x + " We going to " + (int)xDirection);
+        System.out.println("Current Y: " + (int) centerPosition.y + " We going to " + (int)yDirection);
+        velocity = new Vector2(xDirection, yDirection);
+       // System.out.println(velocity);
+
 //        float xCordCoef = xCordToGo / yCordToGo;
 //        float yCordCoef = 1 - Math.abs(xCordCoef);
 //
@@ -87,6 +96,8 @@ public class Player extends Target{
     }
 
     public void bounce(){
+//        velocity.x = -velocity.x * boundsMultiplayer;
+//        velocity.y = -velocity.y * boundsMultiplayer;
         if (position.y <= 0 | position.y + this.ySize >= BallsGameClass.HEIGHT){
             velocity.y = -velocity.y * boundsMultiplayer;}
         if (position.x <= 0 | position.x + this.xSize >= BallsGameClass.WIDTH)
@@ -101,20 +112,49 @@ public class Player extends Target{
         position.add(velocity.x, velocity.y);
 
         velocity.scl(1/deltaTime);
+
+        position.add(velocity.x, velocity.y);
+        if(position.y <= 0){
+            position.y = 0;
+            if (velocity.x - SLIDESPEED * 2 <= 0 | velocity.x + SLIDESPEED * 2 >= 0){
+                velocity.x += -velocity.x * SLIDESPEED;}
+            else{
+                velocity.x = 0;
+            }
+            bounce();
+        }
         bounds.setPosition(position.x, position.y);
+        checkCollisionsWithGround();
+    }
+
+    public void checkCollisionsWithGround() {
+        if (position.x < 0){
+            position.x = 0;
+            bounce();
+        }
+        if (position.x > BallsGameClass.WIDTH - this.ySize){
+            position.x = BallsGameClass.WIDTH - this.ySize;
+            bounce();
+        }
+
+        if (position.y > BallsGameClass.HEIGHT - this.ySize){
+            bounce();
+            position.y = BallsGameClass.HEIGHT - this.ySize;
+        }
     }
 
     private void freeFall(){
         if (this.isInAir()){
-            velocity.add(0, GRAVITY);}
+            velocity.add(0, GRAVITY);
+            }
         else if(!isGrounded){
             isGrounded = true;
-            position.y = 0;
+            bounce();
+//            position.y = 0;
         }
     }
     public boolean isInAir(){
-        isGrounded = false;
-        return ((int) position.y > 1);
+        return ( position.y < BallsGameClass.HEIGHT);
 
     }
 
