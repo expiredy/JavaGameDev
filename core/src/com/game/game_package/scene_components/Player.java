@@ -74,6 +74,13 @@ public class Player extends Target{
 //        System.out.println(centerPosition.x + " " + xCordToGo);
 //        System.out.println(centerPosition.y + " " + yCordToGo);
 
+        float deltaX = xCordToGo - centerPosition.x;
+        float deltaY = yCordToGo - centerPosition.y;
+        float lengthOfWay = (float) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+//        float x = (float)(radius * Math.Cos(angleInDegrees * Math.PI / 180F)) + origin.X;
+//        float y = (float)(radius * Math.Sin(angleInDegrees * Math.PI / 180F)) + origin.Y;
+////        float angleInDegrees = x - MovementVector.x
 
         double degreeToGo = 90;
 
@@ -84,9 +91,7 @@ public class Player extends Target{
         MovementVector = new Vector2(ca * MovementVector.x - sa * MovementVector.y,
                 sa * MovementVector.x + ca * MovementVector.y);
         velocity.add(MovementVector);
-//        float deltaX = xCordToGo - centerPosition.x;
-//        float deltaY = yCordToGo - centerPosition.y;
-//        float lengthOfWay = (float) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
 //        float xDirection = SPEED * (deltaX  / lengthOfWay);
 //        float yDirection = SPEED * (deltaY / lengthOfWay);
 ////        System.out.println(xDirection + " " + yDirection);

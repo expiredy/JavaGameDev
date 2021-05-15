@@ -1,5 +1,8 @@
 package com.game.game_package.database;
 
+
+import com.google.gson.Gson;
+
 public class DataBaseMatches {
 
     private static final String DATABASE_NAME = "LevelDataBase.db";

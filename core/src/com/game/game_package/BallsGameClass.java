@@ -15,7 +15,7 @@ public class BallsGameClass extends Game {
 	private GameStateManager stateManager;
 
 	private void startRender(){
-		Gdx.gl.glClearColor(1, 1, 1,1);
+		Gdx.gl.glClearColor(1, 1, 1, 1);
 	}
 	
 	@Override
