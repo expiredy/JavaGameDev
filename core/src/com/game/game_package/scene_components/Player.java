@@ -73,15 +73,26 @@ public class Player extends Target{
         Vector2 MovementVector = new Vector2(10, 10);
 //        System.out.println(centerPosition.x + " " + xCordToGo);
 //        System.out.println(centerPosition.y + " " + yCordToGo);
-        float deltaX = xCordToGo - centerPosition.x;
-        float deltaY = yCordToGo - centerPosition.y;
-        float lengthOfWay = (float) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-        float xDirection = SPEED * (deltaX  / lengthOfWay);
-        float yDirection = SPEED * (deltaY / lengthOfWay);
-//        System.out.println(xDirection + " " + yDirection);
-        System.out.println("Current X: " + (int) centerPosition.x + " We going to " + (int)xDirection);
-        System.out.println("Current Y: " + (int) centerPosition.y + " We going to " + (int)yDirection);
-        velocity = new Vector2(xDirection, yDirection);
+
+
+        double degreeToGo = 90;
+
+        double radians = Math.PI / 180 * degreeToGo;
+        var ca = Math.Cos(radians);
+        var sa = Math.Sin(radians);
+
+        MovementVector = new Vector2(ca * MovementVector.x - sa * MovementVector.y,
+                sa * MovementVector.x + ca * MovementVector.y);
+        velocity.add(MovementVector);
+//        float deltaX = xCordToGo - centerPosition.x;
+//        float deltaY = yCordToGo - centerPosition.y;
+//        float lengthOfWay = (float) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+//        float xDirection = SPEED * (deltaX  / lengthOfWay);
+//        float yDirection = SPEED * (deltaY / lengthOfWay);
+////        System.out.println(xDirection + " " + yDirection);
+//        System.out.println("Current X: " + (int) centerPosition.x + " We going to " + (int)xDirection);
+//        System.out.println("Current Y: " + (int) centerPosition.y + " We going to " + (int)yDirection);
+//        velocity = new Vector2(xDirection, yDirection);
        // System.out.println(velocity);
 
 //        float xCordCoef = xCordToGo / yCordToGo;
