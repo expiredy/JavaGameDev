@@ -9,4 +9,14 @@ public class DataBaseMatches {
     private static final String COLUMN_ID = "id";
 //    private static final
 
+    public void AddLevel(Integer [][] BlueprintLevelData){
+
+        JsonObject json = new JsonObject();
+        json.put()
+
+    }
+
+    public void LoadLevel(){
+
+    }
 }
