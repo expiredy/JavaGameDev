@@ -1,4 +1,4 @@
-package database;
+package com.game.game_package.database;
 
 import com.game.game_package.constants.LevelKeyConstants;
 

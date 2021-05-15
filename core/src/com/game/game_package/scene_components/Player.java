@@ -1,6 +1,5 @@
 package com.game.game_package.scene_components;
 
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -8,8 +7,6 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.game.game_package.BallsGameClass;
-
-import org.graalvm.compiler.replacements.Log;
 
 public class Player extends Target{
     //Some objects init
@@ -30,6 +27,7 @@ public class Player extends Target{
     public Vector2 position;
     public Vector2 velocity;
     public Vector2 centerPosition;
+
 
     private float xCord;
     private float yCord;
@@ -72,6 +70,7 @@ public class Player extends Target{
     }
 
     public void AddForce(float xCordToGo, float yCordToGo, double force){
+        Vector2 MovementVector = new Vector2(10, 10);
 //        System.out.println(centerPosition.x + " " + xCordToGo);
 //        System.out.println(centerPosition.y + " " + yCordToGo);
         float deltaX = xCordToGo - centerPosition.x;
@@ -96,8 +95,6 @@ public class Player extends Target{
     }
 
     public void bounce(){
-//        velocity.x = -velocity.x * boundsMultiplayer;
-//        velocity.y = -velocity.y * boundsMultiplayer;
         if (position.y <= 0 | position.y + this.ySize >= BallsGameClass.HEIGHT){
             velocity.y = -velocity.y * boundsMultiplayer;}
         if (position.x <= 0 | position.x + this.xSize >= BallsGameClass.WIDTH)

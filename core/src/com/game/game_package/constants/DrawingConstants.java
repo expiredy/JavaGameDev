@@ -6,6 +6,7 @@ public class DrawingConstants {
     private final static Integer DefaultHeight = 2400;
     private final static Integer DefaultWidth = 1080;
     public static Integer meter = 100;
+    public static double BackgroundZoomerPercent = 0.75;
 
     public void calculate_constants(){
         Integer currentHeight = BallsGameClass.HEIGHT;
