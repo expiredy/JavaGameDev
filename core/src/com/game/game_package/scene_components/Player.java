@@ -18,6 +18,7 @@ public class Player extends Target{
     private static final float SPEED = 100f;
     private static final float SLIDESPEED = 0.5f;
     private static final float BounceMultiplayer = 0.3f;
+    private static final Integer DefaultMovingConstant = 0;
 
     //private static final float LERP = 0.1f;
     private static final float boundsMultiplayer = 0.3f;
@@ -78,9 +79,9 @@ public class Player extends Target{
         float deltaY = yCordToGo - centerPosition.y;
         float lengthOfWay = (float) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
-//        float x = (float)(radius * Math.Cos(angleInDegrees * Math.PI / 180F)) + origin.X;
-//        float y = (float)(radius * Math.Sin(angleInDegrees * Math.PI / 180F)) + origin.Y;
-////        float angleInDegrees = x - MovementVector.x
+        float x = (float)(lengthOfWay * Math.Cos(angleInDegrees * Math.PI / 180F)) + deltaX;
+        float y = (float)(lengthOfWay * Math.Sin(angleInDegrees * Math.PI / 180F)) + deltaY;
+        float angleInDegrees = Math.((x - deltaX) / lengthOfWay)
 
         double degreeToGo = 90;
 
@@ -132,7 +133,7 @@ public class Player extends Target{
             if (velocity.x - SLIDESPEED * 2 <= 0 | velocity.x + SLIDESPEED * 2 >= 0){
                 velocity.x += -velocity.x * SLIDESPEED;}
             else{
-                velocity.x = 0;
+                velocity.x = DefaultMovingConstant;
             }
             bounce();
         }
@@ -158,7 +159,7 @@ public class Player extends Target{
 
     private void freeFall(){
         if (this.isInAir()){
-            velocity.add(0, GRAVITY);
+            velocity.add(DefaultMovingConstant, GRAVITY);
             }
         else if(!isGrounded){
             isGrounded = true;
@@ -172,7 +173,7 @@ public class Player extends Target{
     }
 
     public void updateCameraPosition(float deltaTime){
-        camera.position.set(new Vector3(position.x, position.y, 0));
+        camera.position.set(new Vector3(position.x, position.y, DefaultMovingConstant));
         camera.update();
     }
 }
