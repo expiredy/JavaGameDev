@@ -15,7 +15,7 @@ public class Player extends Target{
 
     // some phisiscs constans
     private static final float GRAVITY = -5.0f;
-    private static final float SPEED = 100f;
+    private static final float SPEED = 50f;
     private static final float SLIDESPEED = 0.5f;
     private static final float BounceMultiplayer = 0.3f;
     private static final Integer DefaultMovingConstant = 0;
@@ -29,10 +29,6 @@ public class Player extends Target{
     public Vector2 velocity;
     public Vector2 centerPosition;
 
-
-    private float xCord;
-    private float yCord;
-
     private boolean isGrounded;
 
     // everything about drawing stuff
@@ -45,7 +41,7 @@ public class Player extends Target{
     public Player(OrthographicCamera camera, float spawningXCord, float spawningYCord){
         this.camera = camera;
         //camera.makeFolow(this);
-        velocity =  new Vector2(0, 0);
+        velocity =  new Vector2(DefaultMovingConstant, DefaultMovingConstant);
         position = new Vector2(spawningXCord, spawningYCord);
         isGrounded = false;
         centerPosition = new Vector2(position.x + xSize / 2, position.y + ySize / 2);
@@ -71,27 +67,37 @@ public class Player extends Target{
     }
 
     public void AddForce(float xCordToGo, float yCordToGo, double force){
-        Vector2 MovementVector = new Vector2(10, 10);
+        
+
+        Vector2 MovementVector = new Vector2(SPEED, SPEED);
+
+
 //        System.out.println(centerPosition.x + " " + xCordToGo);
 //        System.out.println(centerPosition.y + " " + yCordToGo);
 
         float deltaX = xCordToGo - centerPosition.x;
         float deltaY = yCordToGo - centerPosition.y;
-        float lengthOfWay = (float) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+        float radius = (float) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
-        float x = (float)(lengthOfWay * Math.Cos(angleInDegrees * Math.PI / 180F)) + deltaX;
-        float y = (float)(lengthOfWay * Math.Sin(angleInDegrees * Math.PI / 180F)) + deltaY;
-        float angleInDegrees = Math.((x - deltaX) / lengthOfWay)
 
-        double degreeToGo = 90;
+        //float angleInDegrees = 90;
 
-        double radians = Math.PI / 180 * degreeToGo;
-        var ca = Math.Cos(radians);
-        var sa = Math.Sin(radians);
-
-        MovementVector = new Vector2(ca * MovementVector.x - sa * MovementVector.y,
-                sa * MovementVector.x + ca * MovementVector.y);
-        velocity.add(MovementVector);
+//        float x = (float)(lengthOfWay * Math.cos(angleInDegrees * Math.PI / 180F)) + deltaX;
+//        float y = (float)(lengthOfWay * Math.sin(angleInDegrees * Math.PI / 180F)) + deltaY;
+//        float angleInDegrees = (float) Math.acos((deltaX - deltaX) / lengthOfWay);
+//
+        //double radians = Math.acos((deltaX * MovementVector.x + deltaY * MovementVector.y) / (lengthOfWay * lengthOfWay));
+//        degreeToGo = degreeToGo / 180 * Math.PI;
+//        System.out.println(degreeToGo);
+////
+//        double radians = Math.PI * degreeToGo;
+//        float ca = (float) Math.cos(radians);
+//        float sa = (float) Math.sin(radians);
+//
+//        MovementVector = new Vector2(ca * MovementVector.x - sa * MovementVector.y,
+//                sa * MovementVector.x + ca * MovementVector.y);
+//        System.out.println("Vector movement" + MovementVector.x + " " + MovementVector.y);
+//        velocity.add(MovementVector);
 
 //        float xDirection = SPEED * (deltaX  / lengthOfWay);
 //        float yDirection = SPEED * (deltaY / lengthOfWay);
@@ -118,6 +124,7 @@ public class Player extends Target{
             velocity.x = -velocity.x * boundsMultiplayer;
 
     }
+
 
     private void updateCurrentPosition(float deltaTime){
         velocity.scl(deltaTime);
