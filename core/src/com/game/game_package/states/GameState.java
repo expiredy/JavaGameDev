@@ -1,23 +1,25 @@
 package com.game.game_package.states;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.game.game_package.BallsGameClass;
 import com.game.game_package.GameStateManager;
 import com.game.game_package.scene_components.Player;
-import com.game.game_package.scene_components.PlayerCamera;
+import com.game.game_package.scene_components.TheWorldClass;
 
 public class GameState extends State{
     private Player player;
+    private Player currentPlayer;
+    private Player[] players;
 
+    private TheWorldClass GameField;
     private float startTime;
     private boolean isCollectingForce = false;
 
-    public GameState(GameStateManager gameStateManager) {
+    public GameState(GameStateManager gameStateManager, String gameMode) {
         super(gameStateManager);
+        GameField = new TheWorldClass();
         initObjects();
         playerCamera.setToOrtho(false, BallsGameClass.WIDTH, BallsGameClass.HEIGHT);
     }
@@ -48,7 +50,6 @@ public class GameState extends State{
     @Override
     public void update(float deltaTime) {
         handleInput();
-
         player.update(deltaTime);
 
     }
@@ -57,6 +58,7 @@ public class GameState extends State{
     public void render(SpriteBatch batch) {
         batch.setProjectionMatrix(playerCamera.combined);
         batch.begin();
+        GameField.renderBackground(batch);
         player.drawPlayer(batch);
         batch.end();
 

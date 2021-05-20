@@ -15,7 +15,7 @@ public class Player extends Target{
 
     // some phisiscs constans
     private static final float GRAVITY = -5.0f;
-    private static final float SPEED = 50f;
+    private static final float SPEED = 100f;
     private static final float SLIDESPEED = 0.5f;
     private static final float BounceMultiplayer = 0.3f;
     private static final Integer DefaultMovingConstant = 0;
@@ -77,7 +77,19 @@ public class Player extends Target{
 
         float deltaX = xCordToGo - centerPosition.x;
         float deltaY = yCordToGo - centerPosition.y;
-        float radius = (float) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+
+        float cosOfVectors = (float) ((centerPosition.x * deltaX + centerPosition.y * deltaY) /
+                        (Math.sqrt(centerPosition.x * centerPosition.x + centerPosition.y * centerPosition.y)
+                                * Math.sqrt(deltaX * deltaX + deltaY * deltaY)));
+        System.out.println(cosOfVectors);
+
+//        cos(a) = 1 - sin(a)^2;
+        float sa = cosOfVectors * cosOfVectors - 1;
+//        float radians = (float) (cosOfVectors / 180.0d * Math.PI);
+
+
+//        float radius = (float) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
 
         //float angleInDegrees = 90;
@@ -91,13 +103,13 @@ public class Player extends Target{
 //        System.out.println(degreeToGo);
 ////
 //        double radians = Math.PI * degreeToGo;
-//        float ca = (float) Math.cos(radians);
+
 //        float sa = (float) Math.sin(radians);
-//
-//        MovementVector = new Vector2(ca * MovementVector.x - sa * MovementVector.y,
-//                sa * MovementVector.x + ca * MovementVector.y);
+
+        MovementVector = new Vector2(cosOfVectors * MovementVector.x - sa * MovementVector.y,
+                sa * MovementVector.x + cosOfVectors * MovementVector.y);
 //        System.out.println("Vector movement" + MovementVector.x + " " + MovementVector.y);
-//        velocity.add(MovementVector);
+        velocity.add(MovementVector);
 
 //        float xDirection = SPEED * (deltaX  / lengthOfWay);
 //        float yDirection = SPEED * (deltaY / lengthOfWay);
@@ -176,6 +188,7 @@ public class Player extends Target{
     }
     public boolean isInAir(){
         return ( position.y < BallsGameClass.HEIGHT);
+
 
     }
 

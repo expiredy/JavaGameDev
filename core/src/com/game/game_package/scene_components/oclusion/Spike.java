@@ -1,4 +1,4 @@
-package com.game.game_package.scene_components.oclusion;
+    package com.game.game_package.scene_components.oclusion;
 
 public class Spike implements DefaultObject{
 

@@ -1,8 +1,12 @@
 package com.game.game_package.scene_components;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-import com.game.game_package.constants.*;
+import com.game.game_package.BallsGameClass;
+import com.game.game_package.constants.LevelKeyConstants;
 import com.game.game_package.scene_components.oclusion.DefaultObject;
 import com.game.game_package.scene_components.oclusion.FreeSpace;
 import com.game.game_package.scene_components.oclusion.Spike;
@@ -15,6 +19,8 @@ public class TheWorldClass {
     private Integer worldsHeight;
     private Integer worldsWidth;
     private World world;
+    private Texture backgroundTexture;
+    private Sprite backgroundSprite;
 
     //  objects
 
@@ -25,6 +31,8 @@ public class TheWorldClass {
     public DefaultObject [][] gameField;
 
     public TheWorldClass(){
+        backgroundTexture = new Texture("backgrounds/maxresdefault.jpg");
+        backgroundSprite = new Sprite(backgroundTexture);
         System.out.println(worldsWidth + "/n" + worldsHeight);
     }
 
@@ -50,5 +58,9 @@ public class TheWorldClass {
                 }
             }
         }
+    }
+
+    public void renderBackground(Batch spriteBatch) {
+        spriteBatch.draw(backgroundTexture, 0 , 0, BallsGameClass.WIDTH, BallsGameClass.HEIGHT);
     }
 }
