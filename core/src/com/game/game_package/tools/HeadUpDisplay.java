@@ -7,6 +7,10 @@ public class HeadUpDisplay {
     private Stage stage;
     private Label outputLabel;
 
+    public HeadUpDisplay(String gameMode){
+
+    }
+
 
     
 }
