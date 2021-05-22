@@ -10,12 +10,11 @@ import com.game.game_package.BallsGameClass;
 
 public class Player extends Target{
     //Some objects init
-
     private final OrthographicCamera camera;
 
     // some phisiscs constans
-    private static final float GRAVITY = -5.0f;
-    private static final float SPEED = 100f;
+    private static final float GRAVITY = -3.0f;
+    private static final float SPEED = 25f;
     private static final float SLIDESPEED = 0.5f;
     private static final float BounceMultiplayer = 0.3f;
     private static final Integer DefaultMovingConstant = 0;
@@ -44,14 +43,16 @@ public class Player extends Target{
         velocity =  new Vector2(DefaultMovingConstant, DefaultMovingConstant);
         position = new Vector2(spawningXCord, spawningYCord);
         isGrounded = false;
-        centerPosition = new Vector2(position.x + xSize / 2, position.y + ySize / 2);
+        centerPosition = new Vector2(position.x + (float)xSize / 2,
+                position.y + (float)ySize / 2);
         startDrawing();
     }
 
     public void update(float deltaTime){
         //updateCameraPosition(deltaTime);
         bounds.setPosition(position.x, position.y);
-        centerPosition = new Vector2(position.x + (float)xSize / 2, position.y + (float)ySize / 2);
+        centerPosition = new Vector2(position.x + (float)xSize / 2,
+                position.y + (float)ySize / 2);
         freeFall();
         updateCurrentPosition(deltaTime);
     }
@@ -67,66 +68,27 @@ public class Player extends Target{
     }
 
     public void AddForce(float xCordToGo, float yCordToGo, double force){
-        
 
         Vector2 MovementVector = new Vector2(SPEED, SPEED);
-
-
-//        System.out.println(centerPosition.x + " " + xCordToGo);
-//        System.out.println(centerPosition.y + " " + yCordToGo);
 
         float deltaX = xCordToGo - centerPosition.x;
         float deltaY = yCordToGo - centerPosition.y;
 
+        double cosOfAngel = (MovementVector.x * deltaX + MovementVector.y * deltaY) /
+                (Math.sqrt(MovementVector.x * MovementVector.x + MovementVector.y * MovementVector.y)
+                * Math.sqrt(deltaX * deltaX + deltaY * deltaY));
 
-        float cosOfVectors = (float) ((centerPosition.x * deltaX + centerPosition.y * deltaY) /
-                        (Math.sqrt(centerPosition.x * centerPosition.x + centerPosition.y * centerPosition.y)
-                                * Math.sqrt(deltaX * deltaX + deltaY * deltaY)));
-        System.out.println(cosOfVectors);
+        double radianAngel = Math.acos(cosOfAngel);
+        double sinOfAngel = Math.sin(radianAngel);
+        float newXForce = MovementVector.x * (float) cosOfAngel - MovementVector.y * (float) sinOfAngel;
+        float newYForce = MovementVector.x * (float) sinOfAngel - MovementVector.y * (float) cosOfAngel;
 
-//        cos(a) = 1 - sin(a)^2;
-        float sa = cosOfVectors * cosOfVectors - 1;
-//        float radians = (float) (cosOfVectors / 180.0d * Math.PI);
-
-
-//        float radius = (float) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+        velocity = new Vector2(-newXForce * (deltaX / Math.abs(deltaX)),
+                -newYForce * (deltaY / Math.abs(deltaY)));
 
 
-        //float angleInDegrees = 90;
-
-//        float x = (float)(lengthOfWay * Math.cos(angleInDegrees * Math.PI / 180F)) + deltaX;
-//        float y = (float)(lengthOfWay * Math.sin(angleInDegrees * Math.PI / 180F)) + deltaY;
-//        float angleInDegrees = (float) Math.acos((deltaX - deltaX) / lengthOfWay);
-//
-        //double radians = Math.acos((deltaX * MovementVector.x + deltaY * MovementVector.y) / (lengthOfWay * lengthOfWay));
-//        degreeToGo = degreeToGo / 180 * Math.PI;
-//        System.out.println(degreeToGo);
-////
-//        double radians = Math.PI * degreeToGo;
-
-//        float sa = (float) Math.sin(radians);
-
-        MovementVector = new Vector2(cosOfVectors * MovementVector.x - sa * MovementVector.y,
-                sa * MovementVector.x + cosOfVectors * MovementVector.y);
-//        System.out.println("Vector movement" + MovementVector.x + " " + MovementVector.y);
-        velocity.add(MovementVector);
-
-//        float xDirection = SPEED * (deltaX  / lengthOfWay);
-//        float yDirection = SPEED * (deltaY / lengthOfWay);
-////        System.out.println(xDirection + " " + yDirection);
-//        System.out.println("Current X: " + (int) centerPosition.x + " We going to " + (int)xDirection);
-//        System.out.println("Current Y: " + (int) centerPosition.y + " We going to " + (int)yDirection);
-//        velocity = new Vector2(xDirection, yDirection);
-       // System.out.println(velocity);
-
-//        float xCordCoef = xCordToGo / yCordToGo;
-//        float yCordCoef = 1 - Math.abs(xCordCoef);
-//
-//        velocity.add(xCordCoef, yCordCoef);
-//        System.out.println(xCordCoef + " " + yCordCoef);
-
-        //velocity.x *= force;
-        //velocity.y *= force;
+        velocity.x *= force;
+        velocity.y *= force;
     }
 
     public void bounce(){

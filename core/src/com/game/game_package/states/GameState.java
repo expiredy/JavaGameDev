@@ -40,7 +40,7 @@ public class GameState extends State{
         }
         else if(!Gdx.input.isTouched() & isCollectingForce){
             isCollectingForce = false;
-            player.AddForce(Gdx.input.getX(), Gdx.input.getY(), 10);
+            player.AddForce(Gdx.input.getX(), Gdx.input.getY(), 3);
 //            if (player.isJumpable()){
 //                player.jump(Gdx.input.getX(), Gdx.input.getY(),(float) (TimeUtils.millis() - powerCounter) / 1000);
 //            }

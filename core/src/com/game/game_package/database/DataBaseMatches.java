@@ -1,9 +1,5 @@
 package com.game.game_package.database;
 
-
-import com.badlogic.gdx.utils.Json;
-//import com.google.gson.Gson;
-
 public class DataBaseMatches {
 
     private static final String DATABASE_NAME = "LevelDataBase.db";
@@ -14,8 +10,7 @@ public class DataBaseMatches {
 //    private static final
 
     public void AddLevel(Integer [][] BlueprintLevelData){
-        Json json = new Json();
-        //json.put()
+
 
     }
 
