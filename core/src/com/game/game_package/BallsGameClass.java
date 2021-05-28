@@ -13,6 +13,7 @@ public class BallsGameClass extends Game {
 	SpriteBatch batch;
 	private GameStateManager stateManager;
 
+
 	private void startRender(){
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 	}
@@ -24,7 +25,7 @@ public class BallsGameClass extends Game {
 		System.out.print(HEIGHT + " " + WIDTH);
 		this.batch = new SpriteBatch();
 		this.stateManager = new GameStateManager();
-		stateManager.addState(new GameState(stateManager, LevelKeyConstants.offlineKey));
+		stateManager.addState(new GameState(stateManager, LevelKeyConstants.offlineKey, this));
 		startRender();
 	}
 
@@ -43,4 +44,9 @@ public class BallsGameClass extends Game {
 	public static Texture getPlayerSkin(){
 		return new Texture( "player_skin\\RedBall.png");
 	}
+	public void restart() {
+		stateManager.removeLastState();
+		stateManager.addState(new GameState(stateManager, LevelKeyConstants.offlineKey, this));
+	}
+
 }

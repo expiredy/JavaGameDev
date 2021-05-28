@@ -1,5 +1,6 @@
 package com.game.game_package.scene_components;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -14,7 +15,7 @@ public class Player extends Target{
 
     // some phisiscs constans
     private static final float GRAVITY = -3.0f;
-    private static final float SPEED = 25f;
+    private static final float SPEED = 5f;
     private static final float SLIDESPEED = 0.5f;
     private static final float BounceMultiplayer = 0.3f;
     private static final Integer DefaultMovingConstant = 0;
@@ -69,23 +70,12 @@ public class Player extends Target{
 
     public void AddForce(float xCordToGo, float yCordToGo, double force){
 
-        Vector2 MovementVector = new Vector2(SPEED, SPEED);
+        float deltaX = -(BallsGameClass.WIDTH / 2 - xCordToGo);
+//        float deltaY = yCordToGo - centerPosition.y;
 
-        float deltaX = xCordToGo - centerPosition.x;
-        float deltaY = yCordToGo - centerPosition.y;
 
-        double cosOfAngel = (MovementVector.x * deltaX + MovementVector.y * deltaY) /
-                (Math.sqrt(MovementVector.x * MovementVector.x + MovementVector.y * MovementVector.y)
-                * Math.sqrt(deltaX * deltaX + deltaY * deltaY));
 
-        double radianAngel = Math.acos(cosOfAngel);
-        double sinOfAngel = Math.sin(radianAngel);
-        float newXForce = MovementVector.x * (float) cosOfAngel - MovementVector.y * (float) sinOfAngel;
-        float newYForce = MovementVector.x * (float) sinOfAngel - MovementVector.y * (float) cosOfAngel;
-
-        velocity = new Vector2(-newXForce * (deltaX / Math.abs(deltaX)),
-                -newYForce * (deltaY / Math.abs(deltaY)));
-
+        velocity.add(SPEED * deltaX / Math.abs(deltaX), 0);
 
         velocity.x *= force;
         velocity.y *= force;
@@ -154,8 +144,8 @@ public class Player extends Target{
 
     }
 
-    public void updateCameraPosition(float deltaTime){
-        camera.position.set(new Vector3(position.x, position.y, DefaultMovingConstant));
-        camera.update();
-    }
+//    public void updateCameraPosition(float deltaTime){
+//        camera.position.set(new Vector3(position.x, position.y, DefaultMovingConstant));
+//        camera.update();
+//    }
 }
