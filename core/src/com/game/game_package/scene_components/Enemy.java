@@ -29,7 +29,8 @@ public class Enemy {
     public Texture enemySprite;
 
     public Enemy(int xPosition, Player target) {
-        position = new Vector2(xPosition, BallsGameClass.HEIGHT - xSize);
+        int randomNum = (int)(Math.random() * ySize * 10);
+        position = new Vector2(xPosition, BallsGameClass.HEIGHT + randomNum);
         velocity =  new Vector2(DefaultMovingConstant, DefaultMovingConstant);
         this.target = target;
         enemySprite = new Texture("level_particles\\walls\\SomeWallPart.png");
@@ -80,7 +81,7 @@ public class Enemy {
 
     }
     public boolean isInAir(){
-        return ( position.y < BallsGameClass.HEIGHT);
+        return true;
     }
 
     public void drawEnemy(Batch batch){
